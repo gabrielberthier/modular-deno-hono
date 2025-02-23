@@ -1,14 +1,11 @@
-# Use a base image with Deno installed
-FROM denoland/deno:alpine-2.1.3
-
-# Set the working directory
+# Build stage
+FROM denoland/deno:alpine AS builder
 WORKDIR /app
-
-# Copy your files to the working directory
 COPY . .
+RUN deno cache main.ts
 
-# Pre-fetch dependencies based on the main entrypoint
-RUN deno install
-
-# Run the Deno app using permissions to access the environment and network
-CMD ["run", "--allow-net", "--allow-env", "main.ts"]
+# Production stage
+FROM denoland/deno:alpine
+WORKDIR /app
+COPY --from=builder /app .
+CMD ["deno", "run", "--allow-net", "main.ts"]
