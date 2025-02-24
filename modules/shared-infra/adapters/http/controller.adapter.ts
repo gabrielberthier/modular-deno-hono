@@ -1,5 +1,5 @@
 import { Context, TypedResponse } from "hono";
-import { HttpController } from "../presentation.protocols.ts";
+import { HttpController } from "../../../protocols/presentation.protocols.ts";
 import { ContentfulStatusCode, StatusCode } from "hono/utils/http-status";
 
 export interface HonoSuccessResponse {

@@ -1,11 +1,12 @@
 // routes/userRoutes.ts
 import { Hono } from "hono";
-import { ControllerAdapter } from "../../../protocols/adapters/controller.adapter.ts";
+import { ControllerAdapter } from "../../../shared-infra/adapters/http/controller.adapter.ts";
 import HealthCheckController from "../controllers/add-user.controller.ts";
 import { describeRoute } from "hono-openapi";
 import { validator } from "hono/validator";
 import { schema } from "../schemas/user.schema.ts";
 import { z } from "zod";
+import { ensureJsonMiddleware } from "../../../shared-infra/adapters/http/middleware.adapter.ts";
 
 export const userRoutes = new Hono();
 
@@ -36,15 +37,25 @@ userRoutes.post(
       200: {
         description: "Successful response",
         content: {
-          "text/plain": { schema },
+          "text/json": { schema },
         },
       },
+      422: {
+        description: "Successful response",
+        content: {
+          "text/json": "Invalid JSON",
+        },
+      }
     },
   }),
+  ensureJsonMiddleware,
   validator("json", (value, c) => {
     const parsed = schema.safeParse(value);
     if (!parsed.success) {
-      return c.text("Invalid!", 401);
+      return c.json({
+        message: "Invalid JSON",
+        errors: parsed.error.errors,
+      }, 422);
     }
     return parsed.data;
   }),
