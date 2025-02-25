@@ -3,7 +3,6 @@ import {
   HttpController,
   HttpResponse,
 } from "../../../protocols/presentation.protocols.ts";
-import { AddUserPostgresAdapter } from "../../infra/persistence/add-user.pg.adapter.ts";
 import { AddUserUseCase } from "../../domain/usecases/add-user.usecase.ts";
 
 export default class AddUserController
@@ -13,13 +12,14 @@ export default class AddUserController
       email: string;
     }>
 {
+
+  constructor(private readonly usecase: AddUserUseCase){}
+
   async handle(req: {
     username: string;
     email: string;
   }): Promise<HttpResponse<undefined>> {
-    const usecase = new AddUserUseCase(new AddUserPostgresAdapter());
-
-    const response = await usecase.execute(req);
+    const response = await this.usecase.execute(req);
 
     if (response.error) {
       return {

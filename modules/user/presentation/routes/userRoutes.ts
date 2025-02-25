@@ -6,6 +6,7 @@ import { describeRoute } from "hono-openapi";
 import { validator } from "hono/validator";
 import { schema } from "../schemas/user.schema.ts";
 import { ensureJsonMiddleware } from "../../../shared-infra/adapters/http/middleware.adapter.ts";
+import { createAddUser } from "../../infra/factories/add-user.factory.ts";
 
 export const userRoutes = new Hono();
 
@@ -63,5 +64,5 @@ userRoutes.post(
     }
     return parsed.data;
   }),
-  adapter.adapt(new HealthCheckController())
+  adapter.adapt(new HealthCheckController(createAddUser()))
 );
