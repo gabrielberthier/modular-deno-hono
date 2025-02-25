@@ -10,11 +10,11 @@ endpoints. This template is ready to be deployed on
 
 - **Hono.js**: A fast and minimal web framework for Deno.
 - **CORS Middleware**: Enabled for all routes by default.
+- **Drizzle**: An ORM but better.
+- **Zod**: Validation made easier.
+- **Auto Documentation**: Create seamlessly documentation for endpoints using OpenAPI specs.
 - **Route Grouping**: Cleanly organize routes in separate modules (in `routes`).
 - **Health Check**: A simple endpoint to monitor the uptime of the service.
-
-Logging wasn't included since it is
-[currently marked as UNSTABLE](https://jsr.io/@std/log), add your own or use the
-one linked at your own risk.
+- **Logging**: This includes a logger with a request id.
 
 We also utilize a `Dockerfile` as Railway only provides Deno 1 at the moment.
