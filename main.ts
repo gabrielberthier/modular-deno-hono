@@ -18,7 +18,7 @@ app.get(
         { url: `http://localhost:${port}`, description: "Local Server" },
       ],
     },
-  })
+  }),
 );
 
 app.get(
@@ -26,7 +26,7 @@ app.get(
   apiReference({
     theme: "saturn",
     spec: { url: "/openapi" },
-  })
+  }),
 );
 
 Deno.serve({ port }, app.fetch);
