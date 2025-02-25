@@ -22,6 +22,9 @@ export interface ErrorResponse {
 
 export type HttpResponse<T> = SuccessResponse<T> | ErrorResponse;
 
-export interface HttpController<R = unknown, T = Record<string | number | symbol, never>> {
+export interface HttpController<
+  R = unknown,
+  T = Record<string | number | symbol, never>,
+> {
   handle: (request: T) => Promise<HttpResponse<R>>;
 }

@@ -18,18 +18,18 @@ export type HonoHttpResponse = HonoSuccessResponse | HonoErrorResponse;
 
 export class ControllerAdapter {
   adapt(
-    controller: HttpController
+    controller: HttpController,
   ): (
-    c: Context
+    c: Context,
   ) => Promise<Response | TypedResponse<HonoHttpResponse, StatusCode>> {
     return async (
-      c: Context
+      c: Context,
     ): Promise<
       Response | TypedResponse<HonoHttpResponse, StatusCode>
     > => {
       const body = /application\/json/gi.test(
-        c.req.header("content-type") ?? ""
-      )
+          c.req.header("content-type") ?? "",
+        )
         ? await c.req.json()
         : {};
 
@@ -43,17 +43,23 @@ export class ControllerAdapter {
       if (httpResponse.success) {
         const { data, status, headers } = httpResponse;
         const contentfulStatusCode: ContentfulStatusCode[] = [
-          200, 201, 202, 203, 206, 207, 208, 226,
+          200,
+          201,
+          202,
+          203,
+          206,
+          207,
+          208,
+          226,
         ];
         const isContentfulStatusCode = (
-          status: unknown
+          status: unknown,
         ): status is ContentfulStatusCode =>
           contentfulStatusCode.some((el) => el === status);
         if (data && isContentfulStatusCode(status)) {
-          const responseData =
-            typeof data === "object" && data !== null
-              ? data
-              : { message: data };
+          const responseData = typeof data === "object" && data !== null
+            ? data
+            : { message: data };
           const successResponse: HonoSuccessResponse = {
             success: true,
             data: responseData,
