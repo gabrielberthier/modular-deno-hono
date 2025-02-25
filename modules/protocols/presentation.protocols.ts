@@ -5,7 +5,6 @@ import {
 } from "hono/utils/http-status";
 
 export interface SuccessResponse<T> {
-  success: true;
   data?: T;
   error?: null;
   status: SuccessStatusCode;
@@ -13,8 +12,7 @@ export interface SuccessResponse<T> {
 }
 
 export interface ErrorResponse {
-  success: false;
-  data?: object;
+  data?: null;
   error: Error;
   status: ClientErrorStatusCode | ServerErrorStatusCode;
   headers?: Record<string, string>;
@@ -23,8 +21,8 @@ export interface ErrorResponse {
 export type HttpResponse<T> = SuccessResponse<T> | ErrorResponse;
 
 export interface HttpController<
-  R = unknown,
   T = Record<string | number | symbol, never>,
+  R = unknown
 > {
   handle: (request: T) => Promise<HttpResponse<R>>;
 }

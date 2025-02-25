@@ -13,32 +13,36 @@ const adapter = new ControllerAdapter();
 
 userRoutes.get("/", (c) => c.text("User Home"));
 userRoutes.get("/profile", (c) => c.json({ name: "John Doe" }));
-userRoutes.get(
-  "/love-of-my-life",
-  describeRoute({
-    description: "Say Hello to Love of My Life",
-    responses: {
-      200: {
-        description: "Successful response",
-      },
-    },
-  }),
-  (c) => c.json("Hello, love of my life!"),
-);
 userRoutes.get("/profile/:id", (c) => c.json({ name: c.req.param("id") }));
 userRoutes.post(
   "/",
   describeRoute({
     description: "Say hello to the user",
     responses: {
-      200: {
+      201: {
         description: "Successful response",
         content: {
           "text/json": { schema },
         },
       },
+      400: {
+        description: "Invalid response",
+        content: {
+          "text/json": {
+            error: {
+              message: "User already exists",
+            },
+          },
+        },
+      },
       422: {
-        description: "Successful response",
+        description: "Invalid response",
+        content: {
+          "text/json": "Invalid JSON",
+        },
+      },
+      500: {
+        description: "Server Error",
         content: {
           "text/json": "Invalid JSON",
         },
@@ -49,12 +53,15 @@ userRoutes.post(
   validator("json", (value, c) => {
     const parsed = schema.safeParse(value);
     if (!parsed.success) {
-      return c.json({
-        message: "Invalid JSON",
-        errors: parsed.error.errors,
-      }, 422);
+      return c.json(
+        {
+          message: "Invalid JSON",
+          errors: parsed.error.errors,
+        },
+        422
+      );
     }
     return parsed.data;
   }),
-  adapter.adapt(new HealthCheckController()),
+  adapter.adapt(new HealthCheckController())
 );
