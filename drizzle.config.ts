@@ -1,7 +1,4 @@
 import { defineConfig } from "drizzle-kit";
-import { dirname, join } from "node:path";
-
-
 
 export default defineConfig({
   out: `./drizzle`,

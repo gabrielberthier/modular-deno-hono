@@ -1,5 +1,4 @@
 import { defineConfig } from "drizzle-kit";
-import { dirname, join } from "node:path";
 
 const root = "../../../..";
 

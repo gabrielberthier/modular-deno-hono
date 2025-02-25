@@ -18,9 +18,9 @@
     "start:dev": "deno run --allow-net --allow-env --env-file --watch main.ts",
     "lint": "deno lint",
     "format": "deno fmt",
-    "db:migrate": "",
-    "db:generate": "deno run -A --node-modules-dir npm:drizzle-kit generate",
-    "db:push": "",
+    "db:migrate": "deno -A --env --node-modules-dir ./modules/shared-infra/database/pg/migrate.ts",
+    "db:generate": "deno run -A --env --node-modules-dir npm:drizzle-kit generate",
+    "db:push": "deno run -A --env --node-modules-dir npm:drizzle-kit pushdeno run -A --env --node-modules-dir npm:drizzle-kit",
     "validate": "deno fmt && deno lint && deno test && deno check ."
   },
   "compilerOptions": {
