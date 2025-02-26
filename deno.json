@@ -14,8 +14,8 @@
     "zod-openapi": "npm:zod-openapi@^4.2.3"
   },
   "tasks": {
-    "start": "deno run --allow-net --allow-env main.ts",
-    "start:dev": "deno run db:migrate && deno run --allow-net --allow-env --env-file --watch main.ts",
+    "start": "deno run --allow-net --allow-env --allow-read --allow-write main.ts",
+    "start:dev": "deno run db:migrate && deno run --allow-read --allow-write --allow-net --allow-env --env-file --watch main.ts",
     "lint": "deno lint",
     "format": "deno fmt",
     "db:migrate": "deno -A --env --node-modules-dir ./modules/shared-infra/database/pg/migrate.ts",
