@@ -14,7 +14,8 @@ endpoints. This template is ready to be deployed on
 
 ## Objective
 
-This project structures a Deno + Hono application using a Modular Monolith Approach. It is awesome by default.
+This project structures a Deno + Hono application using a Modular Monolith
+Approach. It is awesome by default.
 
 ## Features
 
@@ -22,9 +23,11 @@ This project structures a Deno + Hono application using a Modular Monolith Appro
 - **CORS Middleware**: Enabled for all routes by default.
 - **Drizzle**: An ORM but better.
 - **Zod**: Validation made easier.
-- **Auto Documentation**: Create seamlessly documentation for endpoints using OpenAPI specs.
+- **Auto Documentation**: Create seamlessly documentation for endpoints using
+  OpenAPI specs.
 - **Route Grouping**: Cleanly organize routes in separate modules (in `routes`).
 - **Health Check**: A simple endpoint to monitor the uptime of the service.
 - **Logging**: This includes a logger with a request id.
 
-We also utilize a `Dockerfile` as Railway only provides Deno 1 at the moment **AND** Docker Compose.
+We also utilize a `Dockerfile` as Railway only provides Deno 1 at the moment
+**AND** Docker Compose.

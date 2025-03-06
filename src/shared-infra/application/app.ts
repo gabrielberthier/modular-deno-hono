@@ -1,5 +1,5 @@
 import { cors } from "hono/cors";
-import { userRoutes } from "../../user/presentation/routes/userRoutes.ts";
+import { userRoutes } from "../../modules/user/presentation/routes/userRoutes.ts";
 import { logger } from "hono/logger";
 import process from "node:process";
 import { requestId } from "hono/request-id";

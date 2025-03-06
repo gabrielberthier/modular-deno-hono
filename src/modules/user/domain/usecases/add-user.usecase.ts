@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { AddUserRepository } from "../repositories/add-user.repository.ts";
+import { IAddUserRepository } from "../repositories/add-user.repository.ts";
 
 export interface AddUserUseCaseInput {
   username: string;
@@ -7,7 +7,7 @@ export interface AddUserUseCaseInput {
 }
 
 export class AddUserUseCase {
-  constructor(private readonly addUserRepository: AddUserRepository) {}
+  constructor(private readonly addUserRepository: IAddUserRepository) {}
 
   async execute(user: AddUserUseCaseInput) {
     return await this.addUserRepository.add({

@@ -7,6 +7,6 @@ export interface AddUserResult {
   error?: UniqueConstraintError | InternalServerError;
 }
 
-export interface AddUserRepository {
+export interface IAddUserRepository {
   add: (data: User) => Promise<AddUserResult>;
 }

@@ -1,11 +1,11 @@
 // routes/userRoutes.ts
 import { Hono } from "hono";
-import { ControllerAdapter } from "../../../shared-infra/adapters/http/controller.adapter.ts";
+import { ControllerAdapter } from "../../../../shared-infra/adapters/http/controller.adapter.ts";
 import HealthCheckController from "../controllers/add-user.controller.ts";
 import { describeRoute } from "hono-openapi";
 import { validator } from "hono/validator";
 import { schema } from "../schemas/user.schema.ts";
-import { ensureJsonMiddleware } from "../../../shared-infra/adapters/http/middleware.adapter.ts";
+import { ensureJsonMiddleware } from "../../../../shared-infra/adapters/http/middleware.adapter.ts";
 import { createAddUser } from "../../infra/factories/add-user.factory.ts";
 import { Buffer } from "node:buffer";
 import { createWriteStream, mkdirSync, stat } from "node:fs";
@@ -64,12 +64,12 @@ userRoutes.post(
           message: "Invalid JSON",
           errors: parsed.error.errors,
         },
-        422
+        422,
       );
     }
     return parsed.data;
   }),
-  adapter.adapt(new HealthCheckController(createAddUser()))
+  adapter.adapt(new HealthCheckController(createAddUser())),
 );
 
 userRoutes.post("/upload", async (c) => {
@@ -93,7 +93,7 @@ userRoutes.post("/upload", async (c) => {
             error: "Expected a file upload but received something else",
             received: typeof file,
           },
-          400
+          400,
         );
       }
 
@@ -112,7 +112,7 @@ userRoutes.post("/upload", async (c) => {
         size: file.size,
         type: file.type,
       };
-    })
+    }),
   );
 
   return c.json({ message: "Image uploaded", files: processedFiles }, 200);
@@ -139,7 +139,7 @@ userRoutes.post("/upload2", async (c) => {
             error: "Expected a file upload but received something else",
             received: typeof file,
           },
-          400
+          400,
         );
       }
 
@@ -151,7 +151,7 @@ userRoutes.post("/upload2", async (c) => {
           {
             message: "File already exists",
           },
-          200
+          200,
         );
       }
 
@@ -163,22 +163,15 @@ userRoutes.post("/upload2", async (c) => {
         }
         await Deno.mkdir(dir);
       }
-
-      const uploadedFile = await Deno.open(path, {
-        createNew: true,
-        write: true,
-        create: true,
-      });
-
       // System automatically closes the file
-      await file.stream().pipeTo(uploadedFile.writable);
+      await Deno.writeFile(path, file.stream());
 
       return {
         name: file.name,
         size: file.size,
         type: file.type,
       };
-    })
+    }),
   );
 
   return c.json({ message: "Image uploaded", files: processedFiles }, 200);

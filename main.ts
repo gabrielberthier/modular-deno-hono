@@ -1,5 +1,5 @@
 import process from "node:process";
-import app from "./modules/shared-infra/application/app.ts";
+import app from "./src/shared-infra/application/app.ts";
 import { openAPISpecs } from "hono-openapi";
 import { apiReference } from "@scalar/hono-api-reference";
 

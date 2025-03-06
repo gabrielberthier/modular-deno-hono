@@ -13,3 +13,5 @@ export const db = drizzle({
   }),
   schema: { usersSchema },
 });
+
+export type PgDb = typeof db;
